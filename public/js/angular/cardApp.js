@@ -1,0 +1,1 @@
+var ngCardApp = angular.module('ngCardApp',['dndLists']);

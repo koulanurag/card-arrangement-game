@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type="text/css"  href="css/pace.css" rel="stylesheet"/>
+  <script type="text/javascript" src="js/lib/pace.js"></script>
+  <script>
+   paceOptions = {
+        elements: {
+            selectors: ['.face']
+        }
+    } 
+    Pace.on('start',function(){
+        console.log('start');
+    });
+    Pace.on('done',function(){
+        console.log('done');
+        $('#game-area').css('opacity',1);
+    })
+/*  Pace.start = function(){
+      console.log('started');
+  }
+  Pace.done = function(){
+      console.log('stopped');
+  }*/
+      
+  </script>
+  
+  <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/angular/lib/angular.min.js"></script>
+  <script type="text/javascript" src="js/angular/lib/angular-drag-and-drop-lists.min.js"></script>
+  <link type="text/css"  href="css/pace.css" rel="stylesheet">
+  <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
+  <link type="text/css" href="css/simple.css" rel="stylesheet"/>
+  <link type="text/css"  href="css/example.css" rel="stylesheet"/>
+</head>
+<body data-ng-app="ngCardApp">
+    <div  id="game-area" data-ng-controller="ngCardsController">
+    	<div id="topbar">
+    		<button data-ng-click="shuffle(all_cards)">Shuffle</button>
+		<button data-ng-click="evaluate()">Evaluate</button>
+		<button data-ng-click="actualPattern()" >Actual Pattern</button>
+		<button data-toggle="modal" data-target="#aboutModel">About</button>
+	</div>
+	    <div class="container simpleDemo">
+
+		<ul dnd-list="all_cards">
+			<li ng-repeat="item in all_cards"
+				dnd-draggable="item"
+				dnd-moved="all_cards.splice($index, 1)"
+				dnd-effect-allowed="move"
+				dnd-selected="selected_card = item"
+				ng-class="{'selected': selected_card=== item}"
+				>
+				<div class="card " data-ng-class="[item.category,'rank'+item.count]">
+				<div class="face"></div>
+				<span class="index-bubble">{{$index+1}}</span>
+				</div>
+				
+			</li>
+		</ul>
+	</div>
+        <!-- Score  Modal -->
+        <div class="modal fade" id="scoreModel" tabindex="-1" role="dialog" aria-labelledby="scoreModelLabel">
+      <div class="vertical-alignment-helper">
+  <div class="modal-dialog vertical-align-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="scoreModelLabel">Evaluation</h4>
+      </div>
+      <div class="modal-body">
+        You were away by <span class="score">{{score}}</span> deviation
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-ng-click="playAgain()">Play Again</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+        <!-- About  Modal -->
+<div class="modal fade" id="aboutModel" tabindex="-1" role="dialog" aria-labelledby="aboutModelLabel">
+  <div class="vertical-alignment-helper">
+  <div class="modal-dialog vertical-align-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="aboutModelLabel">About</h4>
+      </div>
+      <div class="modal-body">
+        Some Description of the application
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+    </div>
+
+    <!--dependency-->
+    <script type="text/javascript"  src="js/angular/cardApp.js" ></script>
+    <script type="text/javascript"  src="js/angular/controller/ngCardsController.js" ></script>
+
+</body>
+
+</html>
